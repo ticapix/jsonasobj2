@@ -5,3 +5,19 @@
 ![](https://github.com/hsolbrig/jsonasobj2/workflows/Build/badge.svg)
 
 **See:** [Jupyter notebook](notebooks/readme.ipynb) for documentation
+
+## Tests
+
+### With `pipenv`
+
+```shell
+pipenv install --dev
+pipenv run python -m unittest
+```
+
+### With `uv`
+
+```shell
+uv tool run pipenv install --dev
+uv tool run pipenv run python -m unittest
+```

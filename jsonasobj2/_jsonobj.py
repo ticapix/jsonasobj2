@@ -264,16 +264,12 @@ def as_json(obj: Union[Dict, JsonObj, List], indent: Optional[str] = '   ',
        """
     if isinstance(obj, JsonObj) and '_root' in obj:
         obj = obj._root
-    default_processor = \
-        obj._default if isinstance(obj, JsonObj) else JsonObj._static_default
-    return obj._as_json_dumps(indent,
-                              filtr=filtr,
-                              **kwargs) if isinstance(obj, JsonObj) else \
-        json.dumps(obj,
-                   default=lambda o: default_processor(o, filtr) if filtr else default_processor(o),
+    if isinstance(obj, JsonObj):
+        return obj._as_json_dumps(indent, filtr=filtr, **kwargs)
+    return json.dumps(obj,
+                   default=lambda o: JsonObj._static_default(o, filtr) if filtr else JsonObj._static_default(o),
                    indent=indent,
                    *kwargs)
-
 
 def as_json_obj(obj: Union[Dict, JsonObj, List]) -> JsonTypes:
     """ Return obj as pure python json (vs. JsonObj)
